@@ -1,4 +1,4 @@
-namespace ClinicAppointment.PL.Models
+namespace ClinicAppointment.PL.ViewModels
 {
     public class ErrorViewModel
     {

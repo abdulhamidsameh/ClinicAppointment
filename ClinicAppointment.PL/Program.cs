@@ -2,14 +2,34 @@ namespace ClinicAppointment.PL
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public async static Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            builder.Services.AddApplicationsService();
 
             var app = builder.Build();
+
+            using var scope = app.Services.CreateScope();
+            var services = scope.ServiceProvider;
+            var _dbContext = services.GetRequiredService<ApplicationDbContext>();
+            var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+            var logger = loggerFactory.CreateLogger<Program>();
+            try
+            {
+                await _dbContext.Database.MigrateAsync(); //update database
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error has been occured during applying the migration");
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

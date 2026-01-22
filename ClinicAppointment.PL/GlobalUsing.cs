@@ -1,0 +1,11 @@
+﻿global using ClinicAppointment.DAL.Data;
+global using Microsoft.EntityFrameworkCore;
+global using ClinicAppointment.PL.Extensions;
+global using ClinicAppointment.BLL;
+global using ClinicAppointment.BLL.Interfaces;
+global using ClinicAppointment.BLL.Repositories;
+global using System.Diagnostics;
+global using ClinicAppointment.PL.ViewModels;
+global using Microsoft.AspNetCore.Mvc;
+global using ClinicAppointment.DAL.Models;
+global using ClinicAppointment.BLL.Specifications;

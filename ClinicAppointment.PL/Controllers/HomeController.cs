@@ -1,10 +1,6 @@
-using System.Diagnostics;
-using ClinicAppointment.PL.Models;
-using Microsoft.AspNetCore.Mvc;
-
 namespace ClinicAppointment.PL.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ClinicAppointmentController
     {
         private readonly ILogger<HomeController> _logger;
 

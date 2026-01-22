@@ -1,0 +1,25 @@
+﻿@model Clinic
+@{
+    ViewData["Title"] = "Edit Clinic";
+}
+
+<h1>Edit Clinic</h1>
+
+<br />
+<br />
+
+<form asp-action="Edit">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger">
+
+    </div>
+
+    <div class="form-group mb-5">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <input type="submit" value="Save" class="btn btn-primary" /> |
+    <a asp-action="Index" class="btn btn-light">Cancel</a>
+</form>
