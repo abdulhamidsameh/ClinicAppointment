@@ -7,5 +7,6 @@ public class MappingProfiles : Profile
         CreateMap<DoctorViewModel, Doctor>().ReverseMap();
         CreateMap<ClinicViewModel, Clinic>().ReverseMap();
         CreateMap<PatientViewModel, Patient>().ReverseMap();
+        CreateMap<DoctorScheduleRuleViewModel, DoctorScheduleRule>().ReverseMap();
     }
 }

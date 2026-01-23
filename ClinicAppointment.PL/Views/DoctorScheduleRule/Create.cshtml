@@ -1,0 +1,23 @@
+﻿@model DoctorScheduleRuleViewModel
+@{
+    ViewData["Title"] = "Doctor Schedule Rule Create";
+}
+
+<h1>Create New Doctor Schedule Rule</h1>
+<br />
+<br />
+
+<form asp-action="Create">
+    <div asp-validation-summary="All" class="text-danger">
+    </div>
+    <partial name="PartialViews/CreateEditDoctorScheduleRulePartial"></partial>
+
+
+    <input type="submit" value="Create" class="btn btn-primary"/> | 
+    <a asp-action="Index" class="btn btn-light">Back To List</a>
+</form>
+
+@section ValidationScriptSection {
+    <partial name="_validationscriptspartial"></partial>
+
+}

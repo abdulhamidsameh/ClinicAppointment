@@ -1,0 +1,54 @@
+﻿@model DoctorScheduleRuleViewModel
+@inject IUnitOfWork _unitOfWork
+@{
+    var doctorsList = await _unitOfWork.Repository<Doctor>().GetAllAsync();
+
+    var doctors = new SelectList(doctorsList, nameof(Doctor.Id), nameof(Doctor.FullName));
+}
+<div class="form-group mb-5">
+    <label class="col-form-label" asp-for="Doctor"></label>
+    <select class="form-control" asp-for="DoctorId" asp-items="@doctors">
+
+        <option value="@null"> -- Select Doctor --</option>
+
+    </select>
+
+</div>
+<div class="form-group mb-5">
+    <label asp-for="DayOfWeek" class="form-label"></label>
+
+    <select asp-for="DayOfWeek"
+            class="form-control"
+            asp-items="Html.GetEnumSelectList<DayOfWeek>()">
+        <option value="">-- Select Day --</option>
+    </select>
+
+    <span asp-validation-for="DayOfWeek" class="text-danger"></span>
+</div>
+
+
+<div class="form-group mb-5">
+    <label asp-for="StartTime" class="form-label"></label>
+    <input asp-for="StartTime"
+           type="time"
+           class="form-control"
+           step="60" />
+    <span asp-validation-for="StartTime" class="text-danger"></span>
+</div>
+
+<div class="form-group mb-5">
+    <label asp-for="EndTime" class="form-label"></label>
+    <input asp-for="EndTime"
+           type="time"
+           class="form-control"
+           step="60" />
+    <span asp-validation-for="EndTime" class="text-danger"></span>
+</div>
+<div class="form-check mb-4">
+    <input asp-for="IsOff" class="form-check-input" />
+    <label asp-for="IsOff" class="form-check-label"></label>
+    <span asp-validation-for="IsOff" class="text-danger"></span>
+</div>
+
+
+

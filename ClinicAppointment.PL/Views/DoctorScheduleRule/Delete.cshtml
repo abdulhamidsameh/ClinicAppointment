@@ -1,0 +1,16 @@
+﻿@model DoctorScheduleRuleViewModel
+@{
+    ViewData["Title"] = "Delete Doctor Schedule Rule";
+}
+
+<h1>Are You Sure to Delete This Doctor Schedule Rule</h1>
+
+<br />
+<br />
+
+<form asp-action="Delete">
+    <partial name="PartialViews/DetailsDeleteDoctorScheduleRulePartial"></partial>
+
+    <input type="submit" value="Delete" class="btn btn-danger" /> |
+    <a asp-action="Index" class="btn btn-light">Cancel</a>
+</form>

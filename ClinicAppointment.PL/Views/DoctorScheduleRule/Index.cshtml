@@ -1,0 +1,57 @@
+﻿@model IEnumerable<DoctorScheduleRuleViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+@if (TempData["Message"] is not null)
+{
+    <div id="myDiv">
+        <div class="alert alert-success d-flex justify-content-between align-items-center">
+            <div>@TempData["Message"]</div>
+            <div><button onclick="Change()" id="btn" class="btn"><i class="fa-solid fa-xmark"></i></button></div>
+        </div>
+    </div>
+}  
+<h1>All Doctor Schedule Rules</h1>
+<br />
+<br />
+<a asp-controller="DoctorScheduleRule" asp-action="Create" class="btn btn-primary">Create New Doctor Schedule Rule</a>
+<br />
+
+@if (Model.Count() == 0)
+{
+    <div class="mt-4 alert alert-warning">
+        <h3>There is No Doctor Schedule Rules :(</h3>
+    </div>
+}
+else
+{
+    <table class="table table-striped table-hover mt-5">
+        <thead>
+            <tr>
+                <th>Doctor Name</th>
+                <th>@Html.DisplayNameFor(_ => _.DayOfWeek)</th>
+                <th>@Html.DisplayNameFor(_ => _.StartTime)</th>
+                <th>@Html.DisplayNameFor(_ => _.EndTime)</th>
+                <th>@Html.DisplayNameFor(_ => _.IsOff)</th>
+                <th>Details</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var DoctorScheduleRule in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(M => DoctorScheduleRule.Doctor.FullName)</td>
+                    <td>@Html.DisplayFor(M => DoctorScheduleRule.DayOfWeek)</td>
+                    <td>@Html.DisplayFor(M => DoctorScheduleRule.StartTime)</td>
+                    <td>@Html.DisplayFor(M => DoctorScheduleRule.EndTime)</td>
+                    <td>@Html.DisplayFor(M => DoctorScheduleRule.IsOff)</td>
+
+                    <partial name="_ButtonsPartial" model="@DoctorScheduleRule.Id"></partial>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
