@@ -1,7 +1,7 @@
 ﻿using ClinicAppointment.PL.ViewModels;
 
 namespace ClinicAppointment.PL.Controllers;
-public class DoctorController : Controller
+public class DoctorController : ClinicAppointmentController
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;

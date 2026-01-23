@@ -1,0 +1,16 @@
+﻿@model PatientViewModel
+@{
+    ViewData["Title"] = "Delete Patient";
+}
+
+<h1>Are You Sure to Delete This Patient</h1>
+
+<br />
+<br />
+
+<form asp-action="Delete">
+    <partial name="PartialViews/DetailsDeletePatientPartial"></partial>
+
+    <input type="submit" value="Delete" class="btn btn-danger" /> |
+    <a asp-action="Index" class="btn btn-light">Cancel</a>
+</form>
