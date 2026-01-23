@@ -1,9 +1,9 @@
-﻿@model ClinicViewModel
+﻿@model DoctorViewModel
 @{
-    ViewData["Title"] = "Edit Clinic";
+    ViewData["Title"] = "Edit Doctor";
 }
 
-<h1>Edit Clinic</h1>
+<h1>Edit Doctor</h1>
 
 <br />
 <br />
@@ -14,13 +14,13 @@
 
     </div>
 
-    <partial name="PartialViews/CreateEditClinicPartial"></partial>
-
+    <partial name="PartialViews/CreateEditDoctorPartial"></partial>
 
     <input type="submit" value="Save" class="btn btn-primary" /> |
     <a asp-action="Index" class="btn btn-light">Cancel</a>
 </form>
-@section ValidationScriptSection {
+
+@section ValidationScriptSection{
     <partial name="_validationscriptspartial"></partial>
 
 }

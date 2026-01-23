@@ -9,7 +9,8 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     }
     public async Task<IEnumerable<T>> GetAllAsync()
         => await _dbContext.Set<T>().AsNoTracking().ToListAsync();
-
+    public async Task<bool> AnyAsync(ISpecifications<T> spec)
+        => await ApplySpecifications(spec).AnyAsync();
     public async Task<T?> GetByIdAsync(int id)
         => await _dbContext.Set<T>().FindAsync(id);
 

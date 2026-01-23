@@ -1,4 +1,4 @@
-﻿@model Clinic
+﻿@model ClinicViewModel
 @{
     ViewData["Title"] = "Clinic Create";
 }
@@ -8,12 +8,16 @@
 <br />
 
 <form asp-action="Create">
-    <div class="form-group mb-5">
-        <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control"/>
-        <span asp-validation-for="Name" class="text-danger"></span>
+    <div asp-validation-summary="All" class="text-danger">
     </div>
-    <input type="submit" value="Create" class="btn btn-primary"/> | 
+    <partial name="PartialViews/CreateEditClinicPartial"></partial>
+    <input type="submit" value="Create" class="btn btn-primary" /> |
     <a asp-action="Index" class="btn btn-light">Back To List</a>
 </form>
+
+@section ValidationScriptSection{
+    <partial name="_validationscriptspartial"></partial>
+
+}
+
 

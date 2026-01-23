@@ -9,4 +9,5 @@ public class Appointment : BaseEntity
     public DateTime EndDateTime { get; set; }
     public int VisitMinutes { get; set; }
     public AppointmentStatus Status { get; set; }
+    public DateTime CreationDate { get; set; }
 }

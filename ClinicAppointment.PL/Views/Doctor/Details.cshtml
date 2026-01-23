@@ -1,15 +1,15 @@
-﻿@model ClinicViewModel
+﻿@model DoctorViewModel
 @{
-    ViewData["Title"] = "Clinic Details";
+    ViewData["Title"] = "Doctor Details";
 }
 
-<h1>Clinic Details</h1>
+<h1>Doctor Details</h1>
 
 <br />
 <br />
 
 <div>
-    <partial name="PartialViews/DetailsDeleteClinicPartial"></partial>
+    <partial name="PartialViews/DetailsDeleteDoctorPartial"></partial>
 
     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Update</a> |
     <a asp-action="Index" class="btn btn-light">Back To List</a>

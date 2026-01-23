@@ -1,16 +1,15 @@
-﻿@model ClinicViewModel
+﻿@model DoctorViewModel
 @{
-    ViewData["Title"] = "Delete Clinic";
+    ViewData["Title"] = "Delete Doctor";
 }
 
-<h1>Are You Sure to Delete This Clinic</h1>
+<h1>Are You Sure to Delete This Doctor</h1>
 
 <br />
 <br />
 
 <form asp-action="Delete">
-
-    <partial name="PartialViews/DetailsDeleteClinicPartial"></partial>
+    <partial name="PartialViews/DetailsDeleteDoctorPartial"></partial>
 
     <input type="submit" value="Delete" class="btn btn-danger" /> |
     <a asp-action="Index" class="btn btn-light">Cancel</a>

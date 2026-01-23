@@ -1,33 +1,34 @@
-﻿using System.Threading.Tasks;
-
-namespace ClinicAppointment.PL.Controllers;
+﻿namespace ClinicAppointment.PL.Controllers;
 public class ClinicController : ClinicAppointmentController
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IWebHostEnvironment _env;
+    private readonly IMapper _mapper;
 
-    public ClinicController(IUnitOfWork unitOfWork, IWebHostEnvironment env)
+    public ClinicController(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
-        _env = env;
+        _mapper = mapper;
     }
     public async Task<IActionResult> Index()
     {
         var spec = new BaseSpecifications<Clinic>(c => !c.IsDeleted);
         var clinics = await _unitOfWork.Repository<Clinic>().GetAllWithSpecAsync(spec);
-        return View(clinics);
+        var mappedClinics = _mapper.Map<IEnumerable<Clinic>, IEnumerable<ClinicViewModel>>(clinics);
+        return View(mappedClinics);
     }
     public IActionResult Create()
     {
         return View();
     }
     [HttpPost]
-    public async Task<IActionResult> Create(Clinic clinic)
+    public async Task<IActionResult> Create(ClinicViewModel clinicViewModel)
     {
         if (!ModelState.IsValid)
-            return View(clinic);
-        _unitOfWork.Repository<Clinic>().Add(clinic);
+            return View(clinicViewModel);
+        var mappedClinic = _mapper.Map<ClinicViewModel,Clinic>(clinicViewModel);
+        _unitOfWork.Repository<Clinic>().Add(mappedClinic);
         await _unitOfWork.CompleteAsync();
+        TempData["Message"] = "Clinic Created Successfully";
         return RedirectToAction(nameof(Index));
     }
     public async Task<IActionResult> Details(int? id, string viewName = "Details")
@@ -37,7 +38,8 @@ public class ClinicController : ClinicAppointmentController
         var clinic = await _unitOfWork.Repository<Clinic>().GetByIdAsync(id.Value);
         if (clinic is null)
             return NotFound(); // 404
-        return View(viewName, clinic);
+        var mappedClinic = _mapper.Map<Clinic,ClinicViewModel>(clinic);
+        return View(viewName, mappedClinic);
     }
     public async Task<IActionResult> Edit(int? id)
     {
@@ -45,14 +47,16 @@ public class ClinicController : ClinicAppointmentController
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit([FromRoute] int id, Clinic clinic)
+    public async Task<IActionResult> Edit([FromRoute] int id, ClinicViewModel clinicViewModel)
     {
-        if (id != clinic.Id)
+        if (id != clinicViewModel.Id)
             return BadRequest();
         if (!ModelState.IsValid)
-            return View(clinic);
-        _unitOfWork.Repository<Clinic>().Update(clinic);
+            return View(clinicViewModel);
+        var mappedClinic = _mapper.Map<ClinicViewModel,Clinic>(clinicViewModel);
+        _unitOfWork.Repository<Clinic>().Update(mappedClinic);
         await _unitOfWork.CompleteAsync();
+        TempData["Message"] = "Clinic Updated Successfully";
         return RedirectToAction(nameof(Index));
     }
     public async Task<IActionResult> Delete(int? id)
@@ -61,13 +65,24 @@ public class ClinicController : ClinicAppointmentController
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Delete([FromRoute] int id, Clinic clinic)
+    public async Task<IActionResult> Delete([FromRoute] int id, ClinicViewModel clinicViewModel)
     {
-        if (id != clinic.Id)
+        if (id != clinicViewModel.Id)
             return BadRequest();
+        var spec = new BaseSpecifications<Doctor>(d => d.ClinicId == id && !d.IsDeleted);
+        var hasDoctors = await _unitOfWork.Repository<Doctor>().AnyAsync(spec);
+        if (hasDoctors)
+        {
+            TempData["Message"] = "Cannot delete clinic. It has active doctors.";
+            return RedirectToAction(nameof(Index));
+        }
+        var clinic = await _unitOfWork.Repository<Clinic>().GetByIdAsync(id);
+        if (clinic is null)
+            return NotFound();
         clinic.IsDeleted = true;
         _unitOfWork.Repository<Clinic>().Update(clinic);
         await _unitOfWork.CompleteAsync();
+        TempData["Message"] = "Clinic Deleted Successfully";
         return RedirectToAction(nameof(Index));
     }
 }

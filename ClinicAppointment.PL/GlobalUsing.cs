@@ -9,3 +9,7 @@ global using ClinicAppointment.PL.ViewModels;
 global using Microsoft.AspNetCore.Mvc;
 global using ClinicAppointment.DAL.Models;
 global using ClinicAppointment.BLL.Specifications;
+global using AutoMapper;
+global using ClinicAppointment.PL.Helpers;
+global using ClinicAppointment.DAL.Enums;
+global using System.ComponentModel.DataAnnotations;

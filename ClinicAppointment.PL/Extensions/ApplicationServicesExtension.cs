@@ -6,6 +6,7 @@ public static class ApplicationServicesExtension
         services.AddControllersWithViews();
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+        services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
         return services;
     }
 }
