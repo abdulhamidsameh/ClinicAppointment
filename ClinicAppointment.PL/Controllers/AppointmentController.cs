@@ -112,7 +112,8 @@ public class AppointmentController : ClinicAppointmentController
             StartDateTime = start,
             EndDateTime = end,
             VisitMinutes = vm.VisitMinutes,
-            Status = AppointmentStatus.Booked
+            Status = AppointmentStatus.Booked,
+            CreationDate = DateTime.Now
         };
 
         _unitOfWork.Repository<Appointment>().Add(appt);

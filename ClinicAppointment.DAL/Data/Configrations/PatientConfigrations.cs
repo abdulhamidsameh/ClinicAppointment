@@ -6,5 +6,11 @@ internal class PatientConfigrations : IEntityTypeConfiguration<Patient>
         builder.Property(P => P.Id).UseIdentityColumn(1, 1);
         builder.Property(P => P.FullName).HasColumnType("varchar").HasMaxLength(50).IsRequired();
         builder.Property(P => P.BirthDate).HasConversion(V => V.ToDateTime(TimeOnly.MinValue), V => DateOnly.FromDateTime(V));
+        builder.Property(P => P.Gender)
+            .HasConversion
+            (
+                (Gender) => Gender.ToString(),
+                (GenderAsString) => (Gender)Enum.Parse(typeof(Gender), GenderAsString, true)
+            );
     }
 }
