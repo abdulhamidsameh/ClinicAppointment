@@ -1,6 +1,4 @@
-﻿global using ClinicAppointment.BLL.Repositories;
-global using System.Collections;
-namespace ClinicAppointment.BLL;
+﻿namespace ClinicAppointment.BLL;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly ApplicationDbContext _dbContext;

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Routing.Matching;
-
-namespace ClinicAppointment.PL.Controllers;
+﻿namespace ClinicAppointment.PL.Controllers;
 public class AppointmentController : ClinicAppointmentController
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -57,10 +55,10 @@ public class AppointmentController : ClinicAppointmentController
         var slots = await _schedulingService.GetFreeSlotsAsync(doctorId, date, visitMinutes);
 
 
-        var now = DateTime.Now; // or DateTime.UtcNow if you use UTC everywhere
+        var now = DateTime.Now; 
         if (date == DateOnly.FromDateTime(now))
         {
-            var cutoff = now.AddMinutes(1); // optional buffer
+            var cutoff = now.AddMinutes(1); 
             slots = slots
                 .Where(s => s >= cutoff)
                 .ToList();
@@ -68,7 +66,7 @@ public class AppointmentController : ClinicAppointmentController
 
         var result = slots.Select(s => new
         {
-            value = s.ToString("O"),       // ISO 8601 for POST-back
+            value = s.ToString("O"),       
             text = s.ToString("HH:mm")
         });
         return Json(result);
@@ -94,7 +92,6 @@ public class AppointmentController : ClinicAppointmentController
         var start = vm.SelectedStartDateTime.Value;
         var end = start.AddMinutes(vm.VisitMinutes);
 
-        // Server-side conflict check (critical)
         var appointmentSpec = new BaseSpecifications<Appointment>(a =>
             a.DoctorId == vm.DoctorId
             && a.Status != AppointmentStatus.Cancelled

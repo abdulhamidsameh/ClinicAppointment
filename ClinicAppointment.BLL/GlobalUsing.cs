@@ -5,3 +5,5 @@ global using Microsoft.EntityFrameworkCore;
 global using System.Linq.Expressions;
 global using ClinicAppointment.BLL.Specifications;
 global using ClinicAppointment.DAL.Enums;
+global using ClinicAppointment.BLL.Repositories;
+global using System.Collections;

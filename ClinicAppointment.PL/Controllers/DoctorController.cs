@@ -1,6 +1,4 @@
-﻿using ClinicAppointment.PL.ViewModels;
-
-namespace ClinicAppointment.PL.Controllers;
+﻿namespace ClinicAppointment.PL.Controllers;
 public class DoctorController : ClinicAppointmentController
 {
     private readonly IUnitOfWork _unitOfWork;

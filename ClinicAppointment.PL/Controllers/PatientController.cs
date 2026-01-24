@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace ClinicAppointment.PL.Controllers;
+﻿namespace ClinicAppointment.PL.Controllers;
 public class PatientController : ClinicAppointmentController
 {
     private readonly IUnitOfWork _unitOfWork;
