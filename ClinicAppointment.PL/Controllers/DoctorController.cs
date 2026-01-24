@@ -75,7 +75,7 @@ public class DoctorController : ClinicAppointmentController
         if (id != doctorViewModel.Id)
             return BadRequest();
         var spec = new BaseSpecifications<DoctorScheduleRule>(d => d.DoctorId == id && !d.IsDeleted);
-        var hasDoctorScheduleRule = await _unitOfWork.Repository<DoctorScheduleRule>().AnyAsync(spec);
+        var hasDoctorScheduleRule = await _unitOfWork.Repository<DoctorScheduleRule>().AnyWithSpecAsync(spec);
         if (hasDoctorScheduleRule)
         {
             TempData["Message"] = "Cannot delete doctor. It has active Doctor Schedule Rule.";

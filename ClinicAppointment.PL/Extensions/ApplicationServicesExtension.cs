@@ -7,6 +7,7 @@ public static class ApplicationServicesExtension
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
         services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
+        services.AddScoped(typeof(ISchedulingService), typeof(SchedulingService));
         return services;
     }
 }

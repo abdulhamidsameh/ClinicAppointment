@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace ClinicAppointment.BLL.Specifications;
+﻿namespace ClinicAppointment.BLL.Specifications;
 internal static class SpecificationsEvaluator<T> where T : BaseEntity
 {
     public static IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecifications<T> spec)
@@ -9,7 +7,10 @@ internal static class SpecificationsEvaluator<T> where T : BaseEntity
 
         if (spec.Criteria is not null)
             query = query.Where(spec.Criteria);
-
+        if (spec.OrderBy is not null)
+            query = query.OrderBy(spec.OrderBy);
+        else if (spec.OrderByDesc is not null)
+            query = query.OrderByDescending(spec.OrderByDesc);
         if (spec.Includes.Count > 0)
             foreach (var include in spec.Includes)
                 query = query.Include(include);

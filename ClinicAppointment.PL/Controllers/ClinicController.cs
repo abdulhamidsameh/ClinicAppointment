@@ -70,7 +70,7 @@ public class ClinicController : ClinicAppointmentController
         if (id != clinicViewModel.Id)
             return BadRequest();
         var spec = new BaseSpecifications<Doctor>(d => d.ClinicId == id && !d.IsDeleted);
-        var hasDoctors = await _unitOfWork.Repository<Doctor>().AnyAsync(spec);
+        var hasDoctors = await _unitOfWork.Repository<Doctor>().AnyWithSpecAsync(spec);
         if (hasDoctors)
         {
             TempData["Message"] = "Cannot delete clinic. It has active doctors.";

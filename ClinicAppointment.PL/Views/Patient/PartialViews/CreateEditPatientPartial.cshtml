@@ -1,10 +1,4 @@
 ﻿@model PatientViewModel
-@inject IUnitOfWork _unitOfWork
-@{
-    var clinicsList = await _unitOfWork.Repository<Clinic>().GetAllAsync();
-
-    var clinics = new SelectList(clinicsList,nameof(Clinic.Id),nameof(Clinic.Name));
-}
 <div class="form-group mb-5">
     <label asp-for="FullName" class="form-label"></label>
     <input asp-for="FullName" class="form-control" />

@@ -13,3 +13,5 @@ global using AutoMapper;
 global using ClinicAppointment.PL.Helpers;
 global using ClinicAppointment.DAL.Enums;
 global using System.ComponentModel.DataAnnotations;
+global using ClinicAppointment.BLL.Servicies;
+global using Microsoft.AspNetCore.Mvc.Rendering;

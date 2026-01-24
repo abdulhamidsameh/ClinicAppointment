@@ -33,6 +33,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="DoctorScheduleRule" asp-action="Index">Doctor Schedule Rules</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Appointment" asp-action="Index">Appointments</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -53,5 +56,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("ValidationScriptSection", required: false)
+
 </body>
 </html>

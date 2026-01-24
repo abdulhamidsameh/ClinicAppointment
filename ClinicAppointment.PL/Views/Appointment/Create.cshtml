@@ -1,0 +1,101 @@
+﻿@model CreateAppointmentViewModel
+@{
+    ViewData["Title"] = "Appointment Create";
+}
+
+<h2>Create Appointment</h2>
+<br />
+<br />
+
+<form asp-action="Create">
+    <div asp-validation-summary="All" class="text-danger">
+    </div>
+
+    <div class="form-group mb-5">
+        <label asp-for="DoctorId" class="form-label"></label>
+        <select asp-for="DoctorId" asp-items="Model.Doctors" id="doctorSelect" class="form-control">
+            <option value="">-- Select Doctor --</option>
+        </select>
+        <span asp-validation-for="DoctorId" class="text-danger"></span>
+
+    </div>
+
+    <div class="form-group mb-5">
+        <label asp-for="PatientId" class="form-label"></label>
+        <select asp-for="PatientId" asp-items="Model.Patients" id="patientSelect" class="form-control">
+            <option value="">-- Select Patient --</option>
+        </select>
+        <span asp-validation-for="PatientId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-5">
+        <label asp-for="AppointmentDate" class="form-label"></label>
+        <input asp-for="AppointmentDate" type="date" id="dateSelect" class="form-control" />
+        <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-5">
+        <label class="form-label">Free Slots (30 min)</label>
+        <select asp-for="SelectedStartDateTime" id="slotSelect" class="form-control">
+            <option value="">-- Select Slot --</option>
+        </select>
+    </div>
+    <input type="submit" value="Create" class="btn btn-primary" /> |
+    <a asp-action="Index" class="btn btn-light">Back To List</a>
+</form>
+
+@section ValidationScriptSection {
+    <partial name="_validationscriptspartial"></partial>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const doctorEl = document.getElementById('doctorSelect');
+            const patientEl = document.getElementById('patientSelect');
+            const dateEl = document.getElementById('dateSelect');
+            const slotEl = document.getElementById('slotSelect');
+
+            // If any is missing, stop and tell you exactly what's wrong
+            if (!doctorEl || !patientEl || !dateEl || !slotEl) {
+                console.error("Missing elements:", { doctorEl, dateEl, slotEl });
+                return;
+            }
+
+            async function loadSlots() {
+                const doctorId = doctorEl.value;
+                const date = dateEl.value; // yyyy-MM-dd
+                slotEl.innerHTML = '<option value="">-- Select Slot --</option>';
+
+                if (!doctorId || !date) return;
+
+                const url = `@Url.Action("FreeSlots", "Appointment")?doctorId=${encodeURIComponent(doctorId)}&date=${encodeURIComponent(date)}&visitMinutes=30`;
+
+                try {
+                    const res = await fetch(url, { headers: { "Accept": "application/json" } });
+                    if (!res.ok) {
+                        console.error("FreeSlots HTTP error:", res.status);
+                        return;
+                    }
+
+                    const slots = await res.json();
+                    console.log("Slots returned:", slots);
+
+                    for (const s of slots) {
+                        const opt = document.createElement('option');
+                        opt.value = s.value;   // ISO string
+                        opt.text = s.text;     // HH:mm
+                        slotEl.appendChild(opt);
+                    }
+                } catch (e) {
+                    console.error("FreeSlots fetch failed:", e);
+                }
+            }
+
+            doctorEl.addEventListener('change', loadSlots);
+            patientEl.addEventListener('change', loadSlots);
+            dateEl.addEventListener('change', loadSlots);
+
+            // Optional: load immediately if both doctor/date already have values
+            loadSlots();
+        });
+    </script>
+}
